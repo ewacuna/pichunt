@@ -1,0 +1,59 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.10.0"
+      - name: Install dependencies
+        run: npm install
+      - name: Create environment files
+        env:
+          API_CONFIG_DEV: ${{ secrets.API_CONFIG_DEV }}
+          API_CONFIG_PROD: ${{ secrets.API_CONFIG_PROD }}
+        run: |
+          directory="src/environments"
+          if [ ! -d "$directory" ]; then
+            mkdir -p "$directory"
+            echo "Directory $directory created successfully."
+          else
+            echo "Directory $directory already exists."
+          fi
+          echo "Creating development environment file..."
+          echo -n "export const environment = " > src/environments/environment.ts
+          echo $API_CONFIG_DEV | base64 --decode >> src/environments/environment.ts
+          echo "Creating production environment file..."
+          echo -n "export const environment = " > src/environments/environment.prod.ts
+          echo $API_CONFIG_PROD | base64 --decode >> src/environments/environment.prod.ts
+      - name: Build
+        run: npm run build-gh-page
+      - uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: docs
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: docs
+          path: docs
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_dir: ./
+          publish_dir: ./
