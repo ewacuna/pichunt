@@ -1,0 +1,19 @@
+<section>
+  <swiper-container appSwiper [config]="swiperConfig">
+    <ng-container *ngFor="let collection of featuredCollections">
+      <swiper-slide>
+        <ion-card color="light" mode="ios" (click)="onSelectCard(collection)">
+          <img
+            alt="Main image from collection"
+            src="{{
+              collection.main_image ? collection.main_image : 'assets/img/card-temp-media.png'
+            }}"
+          />
+          <ion-card-header>
+            <ion-card-subtitle>{{ collection.title }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </swiper-slide>
+    </ng-container>
+  </swiper-container>
+</section>

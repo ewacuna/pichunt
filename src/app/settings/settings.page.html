@@ -1,0 +1,47 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar>
+    <ion-title>
+      {{ 'settings.title' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list-header mode="ios">
+    {{ 'settings.appearance_label' | translate }}
+  </ion-list-header>
+  <ion-list [inset]="true" mode="ios">
+    <ion-item>
+      <ion-toggle
+        [(ngModel)]="themeToggle"
+        (ionChange)="toggleChange($event)"
+        justify="space-between"
+      >
+        {{ 'settings.dark_mode_label' | translate }}
+      </ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-list-header mode="ios">
+    {{ 'settings.language_label' | translate }}
+  </ion-list-header>
+  <ion-list [inset]="true" mode="ios">
+    <ion-item>
+      <ion-select
+        justify="space-between"
+        label="{{ 'settings.preferred_language_label' | translate }}"
+        placeholder="{{ 'common.select' | translate }}"
+        [(ngModel)]="currentLang"
+        (ionChange)="handleLanguageChange($event)"
+        cancelText="{{ 'common.cancel' | translate }}"
+      >
+        <ion-select-option value="en">
+          {{ 'common.english' | translate }}
+        </ion-select-option>
+        <ion-select-option value="es">
+          {{ 'common.spanish' | translate }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>

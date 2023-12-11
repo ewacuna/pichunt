@@ -1,0 +1,39 @@
+.spinner {
+  border-radius: 50%;
+  border: 3px solid var(--main-color);
+  height: 30px;
+  left: 50%;
+  position: absolute;
+  top: 10px;
+  width: 30px;
+
+  &:before, &:after {
+    background-color: var(--main-color);
+    border-radius: 1.5px;
+    content: ' ';
+    display: block;
+    position: absolute;
+    transform-origin: 50% 0%;
+    width: 3px;
+  }
+
+  &:before {
+    animation: spin 2000ms linear infinite;
+    height: 9px;
+    left: 13.5px;
+    top: 50%;
+  }
+
+  &:after {
+    animation: spin 900ms linear infinite;
+    height: 12px;
+    left: 13.5px;
+    top: 50%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

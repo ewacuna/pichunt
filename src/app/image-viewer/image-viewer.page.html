@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ 'image_viewer.title' | translate }}
+    </ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"
+                       text="{{ 'common.back' | translate }}"
+                       icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="photo">
+    <section class="ion-padding">
+      <ion-chip (click)="viewPhotographer(photo.photographer_url)">
+        <ion-avatar>
+          <img
+            alt="Profile photo of {{ photo.photographer }}"
+            ngSrc="./assets/img/avatar.svg"
+            height="512"
+            width="512"
+          />
+        </ion-avatar>
+        <ion-label>{{ photo.photographer }}</ion-label>
+      </ion-chip>
+    </section>
+
+    <section class="image-container">
+      <img
+        class="image-preview"
+        ngSrc="{{ photo.src.original }}"
+        alt="{{ photo.alt }}"
+        height="{{ photo.height }}"
+        width="{{ photo.width }}"
+      >
+    </section>
+  </ng-container>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button
+    (click)="onDownloadImage(photo.src.original)"
+    size="small"
+    [disabled]="isDownload"
+  >
+    <ng-container *ngIf="isDownload; else download">
+      <ion-spinner name="lines-sharp-small"></ion-spinner>
+    </ng-container>
+    <ng-template #download>
+      <ion-icon name="cloud-download-outline"></ion-icon>
+    </ng-template>
+  </ion-fab-button>
+</ion-fab>
