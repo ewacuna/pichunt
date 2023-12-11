@@ -1,7 +1,0 @@
-{
-  "name": "pichunt",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

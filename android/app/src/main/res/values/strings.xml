@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">PicHunt</string>
-    <string name="title_activity_main">PicHunt</string>
-    <string name="package_name">com.pichunt.app</string>
-    <string name="custom_url_scheme">com.pichunt.app</string>
-</resources>
