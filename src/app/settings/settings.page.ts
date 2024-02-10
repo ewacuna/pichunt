@@ -25,8 +25,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private titleService: Title,
     private translate: TranslateService,
     private helperService: HelperService
-  ) {
-  }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.titleService.setTitle('PicHunt | Settings');
@@ -50,20 +49,24 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   private async setLanguage(): Promise<void> {
-    await this.storageService.get('language')
+    await this.storageService
+      .get('language')
       .then(async (value): Promise<void> => {
         this.currentLang = value ? value : 'en';
       });
   }
 
   private async setTheme(): Promise<void> {
-    await this.storageService.get('theme')
+    await this.storageService
+      .get('theme')
       .then(async (value): Promise<void> => {
         if (value) {
           this.themeToggle = value === 'dark';
         } else {
           // Custom user system theme
-          const prefersDark: MediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+          const prefersDark: MediaQueryList = window.matchMedia(
+            '(prefers-color-scheme: dark)'
+          );
           this.themeToggle = prefersDark.matches;
         }
       });

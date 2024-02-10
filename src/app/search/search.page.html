@@ -1,8 +1,6 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar>
-    <ion-title>
-      {{ 'search.title' | translate }}
-    </ion-title>
+    <ion-title> {{ "search.title" | translate }} </ion-title>
   </ion-toolbar>
 
   <ion-toolbar>
@@ -21,7 +19,7 @@
 <ion-content class="ion-padding">
   <ng-container *ngIf="featuredCollection && !isSearching">
     <ion-text>
-      <h4 class="search_label">{{ 'search.popular_search' | translate }}</h4>
+      <h4 class="search_label">{{ "search.popular_search" | translate }}</h4>
     </ion-text>
     <app-featured-collection
       [featuredCollections]="featuredCollection.collections"
@@ -29,7 +27,7 @@
     />
   </ng-container>
 
-  <app-gallery-view [photos]="photoList"/>
+  <app-gallery-view [photos]="photoList" />
 
   <ion-infinite-scroll
     #infiniteScroll
@@ -37,7 +35,7 @@
   >
     <div class="infinite-scroll-content">
       <ng-container *ngIf="isLoading">
-        <app-clock-loading/>
+        <app-clock-loading />
       </ng-container>
     </div>
   </ion-infinite-scroll>

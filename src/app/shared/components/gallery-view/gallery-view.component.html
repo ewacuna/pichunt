@@ -1,7 +1,5 @@
 <section class="grid-container">
-  <ng-container
-    *ngFor="let photo of photos; trackBy: trackByPhotoId"
-  >
+  <ng-container *ngFor="let photo of photos; trackBy: trackByPhotoId">
     <figure [routerLink]="['/image-viewer', photo.id]">
       <img
         ngSrc="{{ photo.src.medium }}"

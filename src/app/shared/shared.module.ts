@@ -7,7 +7,7 @@ import {RouterLink} from '@angular/router';
 import {
   ClockLoadingComponent,
   FeaturedCollectionComponent,
-  GalleryViewComponent
+  GalleryViewComponent,
 } from './components';
 
 import {SwiperDirective} from './directives';
@@ -19,18 +19,12 @@ import {SwiperDirective} from './directives';
     FeaturedCollectionComponent,
     SwiperDirective,
   ],
-  imports: [
-    CommonModule,
-    NgOptimizedImage,
-    IonicModule,
-    RouterLink
-  ],
+  imports: [CommonModule, NgOptimizedImage, IonicModule, RouterLink],
   exports: [
     GalleryViewComponent,
     ClockLoadingComponent,
-    FeaturedCollectionComponent
+    FeaturedCollectionComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SharedModule {
-}
+export class SharedModule {}

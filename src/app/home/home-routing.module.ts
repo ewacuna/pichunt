@@ -10,28 +10,34 @@ const routes: Routes = [
     children: [
       {
         path: 'trending',
-        loadChildren: () => import('../trending/trending.module').then(m => m.TrendingPageModule)
+        loadChildren: () =>
+          import('../trending/trending.module').then(
+            (m) => m.TrendingPageModule
+          ),
       },
       {
         path: 'search',
-        loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
+        loadChildren: () =>
+          import('../search/search.module').then((m) => m.SearchPageModule),
       },
       {
         path: 'settings',
-        loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
+        loadChildren: () =>
+          import('../settings/settings.module').then(
+            (m) => m.SettingsPageModule
+          ),
       },
       {
         path: '',
         redirectTo: 'trending',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomePageRoutingModule {
-}
+export class HomePageRoutingModule {}

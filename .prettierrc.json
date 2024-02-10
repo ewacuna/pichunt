@@ -1,0 +1,17 @@
+{
+  "bracketSpacing": false,
+  "printWidth": 80,
+  "quoteProps": "preserve",
+  "semi": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ["**/*.html"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}

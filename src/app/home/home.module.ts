@@ -13,9 +13,8 @@ import {HomePage} from './home.page';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    TranslateModule
+    TranslateModule,
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
 })
-export class HomePageModule {
-}
+export class HomePageModule {}

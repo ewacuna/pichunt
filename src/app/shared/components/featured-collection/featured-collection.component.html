@@ -6,7 +6,9 @@
           <img
             alt="Main image from collection"
             src="{{
-              collection.main_image ? collection.main_image : 'assets/img/card-temp-media.png'
+              collection.main_image
+                ? collection.main_image
+                : 'assets/img/card-temp-media.png'
             }}"
           />
           <ion-card-header>
