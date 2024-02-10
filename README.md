@@ -18,6 +18,7 @@ Discover images effortlessly with PicHunt, powered by the [Pexels](https://www.p
 - [@ngx-translate](https://github.com/ngx-translate/core) the internationalization (i18n)
 - [@ionic/storage-angular](https://github.com/ionic-team/ionic-storage) the storage engine
 - [Swiper](https://swiperjs.com) mobile touch slider
+- [Prettier](https://prettier.io/) code formatter
 
 ## Development Server
 
