@@ -1,14 +1,12 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar>
-    <ion-title>
-      {{ 'settings.title' | translate }}
-    </ion-title>
+    <ion-title> {{ "settings.title" | translate }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list-header mode="ios">
-    {{ 'settings.appearance_label' | translate }}
+    {{ "settings.appearance_label" | translate }}
   </ion-list-header>
   <ion-list [inset]="true" mode="ios">
     <ion-item>
@@ -17,13 +15,13 @@
         (ionChange)="toggleChange($event)"
         justify="space-between"
       >
-        {{ 'settings.dark_mode_label' | translate }}
+        {{ "settings.dark_mode_label" | translate }}
       </ion-toggle>
     </ion-item>
   </ion-list>
 
   <ion-list-header mode="ios">
-    {{ 'settings.language_label' | translate }}
+    {{ "settings.language_label" | translate }}
   </ion-list-header>
   <ion-list [inset]="true" mode="ios">
     <ion-item>
@@ -36,10 +34,10 @@
         cancelText="{{ 'common.cancel' | translate }}"
       >
         <ion-select-option value="en">
-          {{ 'common.english' | translate }}
+          {{ "common.english" | translate }}
         </ion-select-option>
         <ion-select-option value="es">
-          {{ 'common.spanish' | translate }}
+          {{ "common.spanish" | translate }}
         </ion-select-option>
       </ion-select>
     </ion-item>

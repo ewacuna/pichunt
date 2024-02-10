@@ -27,8 +27,7 @@ export class TrendingPage implements OnInit {
     private titleService: Title,
     private pexelsService: PexelsService,
     private helperService: HelperService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('PicHunt | Trending');
@@ -36,19 +35,18 @@ export class TrendingPage implements OnInit {
   }
 
   private getCuratedPhotos(): void {
-    this.subs.add = this.pexelsService.getCuratedPhotos(this.page)
-      .subscribe({
-        next: (value: IPexelsPhotoList): void => {
-          this.curatedPhotos = [...this.curatedPhotos, ...(value.photos || [])];
-          this.infiniteScroll?.complete();
-          this.isLoading = false;
-        },
-        error: async (err: IPexelsError): Promise<void> => {
-          this.infiniteScroll?.complete();
-          this.isLoading = false;
-          await this.helperService.showError(err?.code);
-        }
-      });
+    this.subs.add = this.pexelsService.getCuratedPhotos(this.page).subscribe({
+      next: (value: IPexelsPhotoList): void => {
+        this.curatedPhotos = [...this.curatedPhotos, ...(value.photos || [])];
+        this.infiniteScroll?.complete();
+        this.isLoading = false;
+      },
+      error: async (err: IPexelsError): Promise<void> => {
+        this.infiniteScroll?.complete();
+        this.isLoading = false;
+        await this.helperService.showError(err?.code);
+      },
+    });
   }
 
   public onGalleryInfinite(event: InfiniteScrollCustomEvent): void {

@@ -2,10 +2,9 @@ import {Directive, ElementRef, Input} from '@angular/core';
 import {SwiperOptions} from 'swiper/types';
 
 @Directive({
-  selector: '[appSwiper]'
+  selector: '[appSwiper]',
 })
 export class SwiperDirective {
-
   swiperElement: HTMLElement;
 
   @Input('config') config?: SwiperOptions;

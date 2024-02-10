@@ -1,5 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll, IonSearchbar} from '@ionic/angular';
+import {
+  InfiniteScrollCustomEvent,
+  IonContent,
+  IonInfiniteScroll,
+  IonSearchbar,
+} from '@ionic/angular';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {distinctUntilChanged} from 'rxjs';
@@ -12,7 +17,7 @@ import {
   IPexelsCollection,
   IPexelsError,
   IPexelsPhoto,
-  IPexelsPhotoList
+  IPexelsPhotoList,
 } from '../shared/models';
 import {PexelsService} from '../core/services';
 
@@ -42,8 +47,7 @@ export class SearchPage implements OnInit, OnDestroy {
     private titleService: Title,
     private pexelsService: PexelsService,
     private helperService: HelperService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('PicHunt | Search');
@@ -56,10 +60,9 @@ export class SearchPage implements OnInit, OnDestroy {
   }
 
   private listeningSearch(): void {
-    this.subs.add = this.searchForm.get('search')!.valueChanges
-      .pipe(
-        distinctUntilChanged(),
-      )
+    this.subs.add = this.searchForm
+      .get('search')!
+      .valueChanges.pipe(distinctUntilChanged())
       .subscribe((value: string): void => {
         if (!value) {
           this.isSearching = false;
@@ -88,23 +91,22 @@ export class SearchPage implements OnInit, OnDestroy {
 
     this.isSearching = true;
 
-    this.subs.add = this.pexelsService.searchQuery(query, this.page)
-      .subscribe({
-        next: (value: IPexelsPhotoList): void => {
-          this.photoList = [...this.photoList, ...(value.photos || [])];
-          this.infiniteScroll?.complete();
-          this.isLoading = false;
+    this.subs.add = this.pexelsService.searchQuery(query, this.page).subscribe({
+      next: (value: IPexelsPhotoList): void => {
+        this.photoList = [...this.photoList, ...(value.photos || [])];
+        this.infiniteScroll?.complete();
+        this.isLoading = false;
 
-          if (Capacitor?.getPlatform() !== 'web') {
-            Keyboard.hide().then();
-          }
-        },
-        error: async (err: IPexelsError): Promise<void> => {
-          this.infiniteScroll?.complete();
-          this.isLoading = false;
-          await this.helperService.showError(err?.code);
+        if (Capacitor?.getPlatform() !== 'web') {
+          Keyboard.hide().then();
         }
-      });
+      },
+      error: async (err: IPexelsError): Promise<void> => {
+        this.infiniteScroll?.complete();
+        this.isLoading = false;
+        await this.helperService.showError(err?.code);
+      },
+    });
   }
 
   public onGalleryInfinite(event: InfiniteScrollCustomEvent): void {
@@ -114,15 +116,14 @@ export class SearchPage implements OnInit, OnDestroy {
   }
 
   private getFeaturedCollections(): void {
-    this.subs.add = this.pexelsService.getFeaturedCollections()
-      .subscribe({
-        next: (value: IFeaturedCollection): void => {
-          this.featuredCollection = value;
-        },
-        error: async (err: IPexelsError): Promise<void> => {
-          await this.helperService.showError(err?.code);
-        }
-      });
+    this.subs.add = this.pexelsService.getFeaturedCollections().subscribe({
+      next: (value: IFeaturedCollection): void => {
+        this.featuredCollection = value;
+      },
+      error: async (err: IPexelsError): Promise<void> => {
+        await this.helperService.showError(err?.code);
+      },
+    });
   }
 
   public onSelectCard(event: IPexelsCollection): void {

@@ -16,9 +16,8 @@ import {SharedModule} from '../shared/shared.module';
     IonicModule,
     SearchPageRoutingModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
   ],
-  declarations: [SearchPage]
+  declarations: [SearchPage],
 })
-export class SearchPageModule {
-}
+export class SearchPageModule {}

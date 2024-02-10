@@ -14,9 +14,8 @@ import {ImageViewerPage} from './image-viewer.page';
     IonicModule,
     ImageViewerPageRoutingModule,
     TranslateModule,
-    NgOptimizedImage
+    NgOptimizedImage,
   ],
-  declarations: [ImageViewerPage]
+  declarations: [ImageViewerPage],
 })
-export class ImageViewerPageModule {
-}
+export class ImageViewerPageModule {}

@@ -15,9 +15,8 @@ import {SharedModule} from '../shared/shared.module';
     IonicModule,
     TrendingPageRoutingModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
   ],
-  declarations: [TrendingPage]
+  declarations: [TrendingPage],
 })
-export class TrendingPageModule {
-}
+export class TrendingPageModule {}

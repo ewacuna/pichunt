@@ -3,21 +3,24 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest,
 } from '@angular/common/http';
 import {from, lastValueFrom, Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HttpService implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const skipIntercept: boolean = req.headers.get('skip') === 'true';
 
     if (skipIntercept) {
       req = req.clone({
-        headers: req.headers.delete('skip')
+        headers: req.headers.delete('skip'),
       });
       return next.handle(req);
     }
@@ -35,9 +38,9 @@ export class HttpService implements HttpInterceptor {
     req = req.clone({
       url: this.getUrl(req),
       setHeaders: {
-        'Authorization': environment.pexelsKey
-      }
-    })
+        'Authorization': environment.pexelsKey,
+      },
+    });
 
     return await lastValueFrom(next.handle(req));
   }

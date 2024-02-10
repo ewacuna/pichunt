@@ -2,7 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {lastValueFrom, Observable} from 'rxjs';
 import {SwiperOptions} from 'swiper/types';
 
-import {IPexelsCollection, IPexelsCollectionData, IPexelsPhoto} from '../../models';
+import {
+  IPexelsCollection,
+  IPexelsCollectionData,
+  IPexelsPhoto,
+} from '../../models';
 import {PexelsService} from '../../../core/services';
 
 @Component({
@@ -37,10 +41,7 @@ export class FeaturedCollectionComponent implements OnInit {
     },
   };
 
-  constructor(
-    private pexelsService: PexelsService
-  ) {
-  }
+  constructor(private pexelsService: PexelsService) {}
 
   async ngOnInit(): Promise<void> {
     await this.getCollectionData();
@@ -49,9 +50,10 @@ export class FeaturedCollectionComponent implements OnInit {
   private async getCollectionData(): Promise<void> {
     if (this.featuredCollections.length > 0) {
       for (const collection of this.featuredCollections) {
-        const collection$: Observable<IPexelsCollectionData> = this.pexelsService.getCollection(collection.id);
-        await lastValueFrom(collection$)
-          .then((value: IPexelsCollectionData): void => {
+        const collection$: Observable<IPexelsCollectionData> =
+          this.pexelsService.getCollection(collection.id);
+        await lastValueFrom(collection$).then(
+          (value: IPexelsCollectionData): void => {
             if (value.media.length > 0) {
               const firstPhoto: IPexelsPhoto | undefined = value.media.find(
                 (photo: IPexelsPhoto): boolean => photo.type === 'Photo'
@@ -61,7 +63,8 @@ export class FeaturedCollectionComponent implements OnInit {
                 collection.main_image = firstPhoto.src.landscape;
               }
             }
-          });
+          }
+        );
       }
     }
   }

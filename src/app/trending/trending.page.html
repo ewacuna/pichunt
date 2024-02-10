@@ -1,13 +1,11 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar>
-    <ion-title>
-      {{ 'trending.title' | translate }}
-    </ion-title>
+    <ion-title> {{ "trending.title" | translate }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <app-gallery-view [photos]="curatedPhotos"/>
+  <app-gallery-view [photos]="curatedPhotos" />
 
   <ion-infinite-scroll
     #infiniteScroll
@@ -15,7 +13,7 @@
   >
     <div class="infinite-scroll-content">
       <ng-container *ngIf="isLoading">
-        <app-clock-loading/>
+        <app-clock-loading />
       </ng-container>
     </div>
   </ion-infinite-scroll>

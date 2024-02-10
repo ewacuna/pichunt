@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { ImageViewerPage } from './image-viewer.page';
+import {ImageViewerPage} from './image-viewer.page';
 
 const routes: Routes = [
   {
     path: ':id',
-    component: ImageViewerPage
-  }
+    component: ImageViewerPage,
+  },
 ];
 
 @NgModule({
