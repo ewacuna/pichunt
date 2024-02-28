@@ -5,7 +5,9 @@
     "select": "Seleccionar",
     "english": "Inglés",
     "spanish": "Español",
-    "download": "Descargar"
+    "download": "Descargar",
+    "close": "Cerrar",
+    "clear": "Limpiar"
   },
   "trending": {
     "title": "Tendencias"
@@ -24,6 +26,20 @@
   },
   "image_viewer": {
     "title": "Detalles de la imagen"
+  },
+  "filters": {
+    "title": "Filtros",
+    "orientation": "Orientación",
+    "all_orientation": "Todas las orientaciones",
+    "portrait": "Retrato",
+    "landscape": "Panorama",
+    "square": "Cuadrado",
+    "sizes": "Tamaños",
+    "all_sizes": "Todos los tamaños",
+    "large": "Grande",
+    "medium": "Medio",
+    "small": "Pequeño",
+    "btn_apply_filters": "Aplicar filtros"
   },
   "notifications": {
     "something_wrong": "Algo salió mal.",

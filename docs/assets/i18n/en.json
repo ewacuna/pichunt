@@ -5,7 +5,9 @@
     "select": "Select",
     "english": "English",
     "spanish": "Spanish",
-    "download": "Download"
+    "download": "Download",
+    "close": "Close",
+    "clear": "Clear"
   },
   "trending": {
     "title": "Trending"
@@ -24,6 +26,20 @@
   },
   "image_viewer": {
     "title": "Image Details"
+  },
+  "filters": {
+    "title": "Filters",
+    "orientation": "Orientation",
+    "all_orientation": "All Orientation",
+    "portrait": "Portrait",
+    "landscape": "Landscape",
+    "square": "Square",
+    "sizes": "Sizes",
+    "all_sizes": "All Sizes",
+    "large": "Large",
+    "medium": "Medium",
+    "small": "Small",
+    "btn_apply_filters": "Apply Filters"
   },
   "notifications": {
     "something_wrong": "Something went wrong.",
