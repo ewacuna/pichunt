@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {
@@ -17,10 +17,12 @@ export class PexelsService {
 
   public searchQuery(
     query: string,
-    page: number
+    page: number,
+    params?: HttpParams
   ): Observable<IPexelsPhotoList> {
     return this.httpClient.get<IPexelsPhotoList>(
-      `search?query=${query}&page=${page}`
+      `search?query=${query}&page=${page}`,
+      {responseType: 'json', params}
     );
   }
 

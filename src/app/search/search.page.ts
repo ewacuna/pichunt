@@ -3,6 +3,7 @@ import {
   InfiniteScrollCustomEvent,
   IonContent,
   IonInfiniteScroll,
+  IonModal,
   IonSearchbar,
 } from '@ionic/angular';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -18,8 +19,10 @@ import {
   IPexelsError,
   IPexelsPhoto,
   IPexelsPhotoList,
+  ISearchFilter,
 } from '../shared/models';
 import {PexelsService} from '../core/services';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
@@ -31,6 +34,7 @@ export class SearchPage implements OnInit, OnDestroy {
   @ViewChild(IonContent) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonSearchbar) searchInput: IonSearchbar;
+  @ViewChild(IonModal) modal: IonModal;
 
   // Properties
   public searchForm: FormGroup;
@@ -38,6 +42,8 @@ export class SearchPage implements OnInit, OnDestroy {
   public photoList: IPexelsPhoto[] = [];
   private page = 1;
   public featuredCollection: IFeaturedCollection;
+  private searchParams: HttpParams = new HttpParams();
+  public currentFilters: ISearchFilter[] = [];
 
   // State
   public isLoading = false;
@@ -80,7 +86,7 @@ export class SearchPage implements OnInit, OnDestroy {
     this.onSearch(this.searchForm.get('search')?.value || '');
   }
 
-  private onSearch(query: string): void {
+  private onSearch(query: string, initializeSearch?: boolean): void {
     if (query.length <= 0) {
       this.page = 1;
       this.photoList = [];
@@ -91,22 +97,28 @@ export class SearchPage implements OnInit, OnDestroy {
 
     this.isSearching = true;
 
-    this.subs.add = this.pexelsService.searchQuery(query, this.page).subscribe({
-      next: (value: IPexelsPhotoList): void => {
-        this.photoList = [...this.photoList, ...(value.photos || [])];
-        this.infiniteScroll?.complete();
-        this.isLoading = false;
+    this.subs.add = this.pexelsService
+      .searchQuery(query, this.page, this.searchParams)
+      .subscribe({
+        next: (value: IPexelsPhotoList): void => {
+          this.photoList = [...this.photoList, ...(value.photos || [])];
+          this.infiniteScroll?.complete();
+          this.isLoading = false;
 
-        if (Capacitor?.getPlatform() !== 'web') {
-          Keyboard.hide().then();
-        }
-      },
-      error: async (err: IPexelsError): Promise<void> => {
-        this.infiniteScroll?.complete();
-        this.isLoading = false;
-        await this.helperService.showError(err?.code);
-      },
-    });
+          if (Capacitor?.getPlatform() !== 'web') {
+            Keyboard.hide().then();
+          }
+
+          if (initializeSearch) {
+            this.content.scrollToTop(200);
+          }
+        },
+        error: async (err: IPexelsError): Promise<void> => {
+          this.infiniteScroll?.complete();
+          this.isLoading = false;
+          await this.helperService.showError(err?.code);
+        },
+      });
   }
 
   public onGalleryInfinite(event: InfiniteScrollCustomEvent): void {
@@ -132,6 +144,38 @@ export class SearchPage implements OnInit, OnDestroy {
     this.searchForm.get('search')?.setValue(event.title);
     this.searchInput.setFocus().then();
     this.onSearch(this.searchForm.get('search')?.value || '');
+  }
+
+  public onFiltersApply(event: ISearchFilter[]): void {
+    this.modal.dismiss().then();
+    let params = new HttpParams();
+    this.currentFilters = event;
+
+    const paramMapping: Record<string, string> = {
+      'orientation': 'orientation',
+      'size': 'size',
+    };
+
+    event.forEach((filter: ISearchFilter): void => {
+      const paramName: string = paramMapping[filter.type];
+      if (paramName) {
+        params = params.append(paramName, filter.value);
+      }
+    });
+
+    this.searchParams = params;
+    this.page = 1;
+    this.photoList = [];
+    this.onSearch(this.searchForm.get('search')?.value || '', true);
+  }
+
+  public onClearFilters(): void {
+    this.modal.dismiss().then();
+    this.searchParams = new HttpParams();
+    this.currentFilters = [];
+    this.page = 1;
+    this.photoList = [];
+    this.onSearch(this.searchForm.get('search')?.value || '', true);
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,59 @@
+<section>
+  <article>
+    <ion-list-header mode="ios">
+      {{ "filters.orientation" | translate }}
+    </ion-list-header>
+
+    <ion-list mode="ios" [inset]="true" lines="none">
+      <ion-item
+        *ngFor="let orientation of orientationFilters"
+        (click)="onSelectOrientation(orientation, 'orientation')"
+        [ngClass]="{'is-selected': orientation.isSelected}"
+      >
+        <ion-label>
+          {{ orientation.label | translate }}
+        </ion-label>
+        <ion-icon
+          *ngIf="orientation.isSelected"
+          aria-hidden="true"
+          name="checkmark-circle-outline"
+          slot="end"
+          size="small"
+        >
+        </ion-icon>
+      </ion-item>
+    </ion-list>
+  </article>
+
+  <article class="last-filter-item">
+    <ion-list-header mode="ios">
+      {{ "filters.sizes" | translate }}
+    </ion-list-header>
+
+    <ion-list mode="ios" [inset]="true" lines="none">
+      <ion-item
+        *ngFor="let size of sizeFilters"
+        (click)="onSelectOrientation(size, 'size')"
+        [ngClass]="{'is-selected': size.isSelected}"
+      >
+        <ion-label>
+          {{ size.label | translate }}
+        </ion-label>
+        <ion-icon
+          *ngIf="size.isSelected"
+          aria-hidden="true"
+          name="checkmark-circle-outline"
+          slot="end"
+          size="small"
+        >
+        </ion-icon>
+      </ion-item>
+    </ion-list>
+  </article>
+</section>
+
+<section class="ion-padding-horizontal filters-footer">
+  <ion-button expand="block" mode="ios" (click)="onApplyFilters()">
+    {{ "filters.btn_apply_filters" | translate }}
+  </ion-button>
+</section>

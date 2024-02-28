@@ -2,3 +2,19 @@
   margin-bottom: 0;
   color: var(--secondary-color);
 }
+
+.filter-icon {
+  margin-left: 8px;
+  order: 1;
+  font-size: 28px;
+}
+
+.btn-clear {
+  ion-button {
+    --color: var(--main-color);
+
+    ion-icon {
+      margin-right: 0;
+    }
+  }
+}

@@ -1,42 +1,88 @@
-<ion-header [translucent]="true" mode="ios">
-  <ion-toolbar>
-    <ion-title> {{ "search.title" | translate }} </ion-title>
-  </ion-toolbar>
+<section class="ion-page" #page>
+  <ion-header [translucent]="true" mode="ios">
+    <ion-toolbar>
+      <ion-title> {{ "search.title" | translate }} </ion-title>
+    </ion-toolbar>
 
-  <ion-toolbar>
-    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-      <ion-searchbar
-        placeholder="{{ 'search.search_placeholder' | translate }}"
-        inputmode="search"
-        mode="ios"
-        formControlName="search"
-      >
-      </ion-searchbar>
-    </form>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <ion-searchbar
+          placeholder="{{ 'search.search_placeholder' | translate }}"
+          inputmode="search"
+          mode="ios"
+          formControlName="search"
+        >
+          <ion-icon
+            slot="end"
+            name="options-outline"
+            class="filter-icon"
+            id="filters-modal"
+          ></ion-icon>
+        </ion-searchbar>
+      </form>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="ion-padding">
-  <ng-container *ngIf="featuredCollection && !isSearching">
-    <ion-text>
-      <h4 class="search_label">{{ "search.popular_search" | translate }}</h4>
-    </ion-text>
-    <app-featured-collection
-      [featuredCollections]="featuredCollection.collections"
-      (cardSelected)="onSelectCard($event)"
-    />
-  </ng-container>
+  <ion-content class="ion-padding">
+    <ng-container *ngIf="featuredCollection && !isSearching">
+      <ion-text>
+        <h4 class="search_label">{{ "search.popular_search" | translate }}</h4>
+      </ion-text>
+      <app-featured-collection
+        [featuredCollections]="featuredCollection.collections"
+        (cardSelected)="onSelectCard($event)"
+      />
+    </ng-container>
 
-  <app-gallery-view [photos]="photoList" />
+    <app-gallery-view [photos]="photoList" />
 
-  <ion-infinite-scroll
-    #infiniteScroll
-    (ionInfinite)="onGalleryInfinite($event)"
-  >
-    <div class="infinite-scroll-content">
-      <ng-container *ngIf="isLoading">
-        <app-clock-loading />
-      </ng-container>
-    </div>
-  </ion-infinite-scroll>
-</ion-content>
+    <ion-infinite-scroll
+      #infiniteScroll
+      (ionInfinite)="onGalleryInfinite($event)"
+    >
+      <div class="infinite-scroll-content">
+        <ng-container *ngIf="isLoading">
+          <app-clock-loading />
+        </ng-container>
+      </div>
+    </ion-infinite-scroll>
+
+    <ion-modal
+      #modal
+      trigger="filters-modal"
+      [presentingElement]="page"
+      mode="ios"
+    >
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="modal.dismiss()">
+                {{ "common.close" | translate }}
+              </ion-button>
+            </ion-buttons>
+            <ion-title> {{ "filters.title" | translate }} </ion-title>
+            <ion-buttons slot="end" class="btn-clear">
+              <ion-button (click)="onClearFilters()">
+                <ion-icon
+                  size="small"
+                  slot="start"
+                  name="close-sharp"
+                  aria-label="Clear filters"
+                >
+                </ion-icon>
+                {{ "common.clear" | translate }}
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <app-search-filters
+            [currentFilters]="currentFilters"
+            (selectedFilters)="onFiltersApply($event)"
+          />
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </ion-content>
+</section>

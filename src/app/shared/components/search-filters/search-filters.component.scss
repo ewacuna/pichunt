@@ -1,0 +1,20 @@
+ion-list-header {
+  font-size: 18px;
+}
+
+.is-selected {
+  --color: var(--secondary-color);
+}
+
+.last-filter-item {
+  padding-bottom: 60px;
+}
+
+.filters-footer {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  width: 100%;
+}
+

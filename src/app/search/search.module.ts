@@ -7,6 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {SearchPageRoutingModule} from './search-routing.module';
 import {SearchPage} from './search.page';
 import {SharedModule} from '../shared/shared.module';
+import {SearchFiltersComponent} from '../shared/components';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import {SharedModule} from '../shared/shared.module';
     TranslateModule,
     SharedModule,
   ],
-  declarations: [SearchPage],
+  declarations: [SearchPage, SearchFiltersComponent],
 })
 export class SearchPageModule {}
