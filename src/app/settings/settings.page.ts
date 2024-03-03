@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Title} from '@angular/platform-browser';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 import {SelectCustomEvent, ToggleCustomEvent} from '@ionic/angular';
 import {Subscription} from 'rxjs';
@@ -22,13 +21,11 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   constructor(
     private storageService: StorageService,
-    private titleService: Title,
     private translate: TranslateService,
     private helperService: HelperService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.titleService.setTitle('PicHunt | Settings');
     await this.setLanguage();
     await this.setTheme();
 

@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Title} from '@angular/platform-browser';
 import {Browser} from '@capacitor/browser';
 
 import {HelperService, SubscriptionsContainer} from '../shared/helpers';
@@ -24,13 +23,11 @@ export class ImageViewerPage implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private titleService: Title,
     private pexelsService: PexelsService,
     private helperService: HelperService
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('PicHunt | Image Details');
     this.photoId = this.route.snapshot.paramMap.get('id') || '';
     this.photoId && this.getImageInfo(this.photoId);
 
@@ -47,9 +44,6 @@ export class ImageViewerPage implements OnInit, OnDestroy {
     this.subs.add = this.pexelsService.getPhotoById(photoId).subscribe({
       next: (res: IPexelsPhoto): void => {
         this.photo = res;
-        if (this.photo.alt) {
-          this.titleService.setTitle('PicHunt | ' + this.photo.alt);
-        }
         this.isLoading = false;
       },
       error: async (err: IPexelsError): Promise<void> => {

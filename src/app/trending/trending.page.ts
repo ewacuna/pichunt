@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {InfiniteScrollCustomEvent, IonInfiniteScroll} from '@ionic/angular';
-import {Title} from '@angular/platform-browser';
 
 import {HelperService, SubscriptionsContainer} from '../shared/helpers';
 import {IPexelsError, IPexelsPhoto, IPexelsPhotoList} from '../shared/models';
@@ -24,13 +23,11 @@ export class TrendingPage implements OnInit {
   public isLoading = false;
 
   constructor(
-    private titleService: Title,
     private pexelsService: PexelsService,
     private helperService: HelperService
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('PicHunt | Trending');
     this.getCuratedPhotos();
   }
 

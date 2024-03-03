@@ -7,7 +7,6 @@ import {
   IonSearchbar,
 } from '@ionic/angular';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Title} from '@angular/platform-browser';
 import {distinctUntilChanged} from 'rxjs';
 import {Capacitor} from '@capacitor/core';
 import {Keyboard} from '@capacitor/keyboard';
@@ -50,13 +49,11 @@ export class SearchPage implements OnInit, OnDestroy {
   public isSearching = false;
 
   constructor(
-    private titleService: Title,
     private pexelsService: PexelsService,
     private helperService: HelperService
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('PicHunt | Search');
     this.searchForm = new FormGroup({
       search: new FormControl<string>('', {nonNullable: true}),
     });
