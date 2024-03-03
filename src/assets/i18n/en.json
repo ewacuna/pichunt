@@ -15,7 +15,7 @@
   "search": {
     "title": "Search",
     "search_placeholder": "Search for amazing content",
-    "popular_search": "Popular search"
+    "popular_search": "Popular searches"
   },
   "settings": {
     "title": "Settings",
@@ -23,9 +23,6 @@
     "dark_mode_label": "Dark Mode",
     "language_label": "Language",
     "preferred_language_label": "Preferred Language"
-  },
-  "image_viewer": {
-    "title": "Image Details"
   },
   "filters": {
     "title": "Filters",
