@@ -24,9 +24,6 @@
     "language_label": "Idioma",
     "preferred_language_label": "Idioma preferido"
   },
-  "image_viewer": {
-    "title": "Detalles de la imagen"
-  },
   "filters": {
     "title": "Filtros",
     "orientation": "Orientación",
