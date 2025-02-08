@@ -1,7 +1,7 @@
 <section class="ion-page" #page>
   <ion-header [translucent]="true" mode="ios">
     <ion-toolbar>
-      <ion-title> {{ "search.title" | translate }} </ion-title>
+      <ion-title> {{ "search.title" | translate }}</ion-title>
     </ion-toolbar>
 
     <ion-toolbar>
@@ -24,7 +24,7 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    <ng-container *ngIf="featuredCollection && !isSearching()">
+    @if (featuredCollection && !isSearching()) {
       <ion-text>
         <h4 class="search_label">{{ "search.popular_search" | translate }}</h4>
       </ion-text>
@@ -32,7 +32,7 @@
         [featuredCollections]="featuredCollection.collections"
         (cardSelected)="onSelectCard($event)"
       />
-    </ng-container>
+    }
 
     <app-gallery-view [photos]="photoList()" />
 
@@ -41,9 +41,9 @@
       (ionInfinite)="onGalleryInfinite($event)"
     >
       <div class="infinite-scroll-content">
-        <ng-container *ngIf="isLoading()">
+        @if (isLoading()) {
           <app-clock-loading />
-        </ng-container>
+        }
       </div>
     </ion-infinite-scroll>
 
@@ -61,7 +61,7 @@
                 {{ "common.close" | translate }}
               </ion-button>
             </ion-buttons>
-            <ion-title> {{ "filters.title" | translate }} </ion-title>
+            <ion-title> {{ "filters.title" | translate }}</ion-title>
             <ion-buttons slot="end" class="btn-clear">
               <ion-button (click)="onClearFilters()">
                 <ion-icon

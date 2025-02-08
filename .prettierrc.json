@@ -10,7 +10,8 @@
     {
       "files": ["**/*.html"],
       "options": {
-        "singleQuote": false
+        "singleQuote": false,
+        "parser": "angular"
       }
     }
   ]

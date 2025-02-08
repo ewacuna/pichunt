@@ -1,6 +1,6 @@
 <section>
   <swiper-container appSwiper [config]="swiperConfig">
-    <ng-container *ngFor="let collection of featuredCollections">
+    @for (collection of featuredCollections; track collection) {
       <swiper-slide>
         <ion-card color="light" mode="ios" (click)="onSelectCard(collection)">
           <img
@@ -16,6 +16,6 @@
           </ion-card-header>
         </ion-card>
       </swiper-slide>
-    </ng-container>
+    }
   </swiper-container>
 </section>

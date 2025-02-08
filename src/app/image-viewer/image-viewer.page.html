@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="photo">
+  @if (photo) {
     <section class="ion-padding">
       <ion-chip (click)="viewPhotographer(photo.photographer_url)">
         <ion-avatar>
@@ -26,7 +26,6 @@
         <ion-label>{{ photo.photographer }}</ion-label>
       </ion-chip>
     </section>
-
     <section class="image-container">
       <img
         class="image-preview"
@@ -36,7 +35,7 @@
         width="{{ photo.width }}"
       />
     </section>
-  </ng-container>
+  }
 </ion-content>
 
 <ion-fab slot="fixed" vertical="bottom" horizontal="end">
@@ -45,11 +44,10 @@
     size="small"
     [disabled]="isDownload"
   >
-    <ng-container *ngIf="isDownload; else download">
+    @if (isDownload) {
       <ion-spinner name="lines-sharp-small"></ion-spinner>
-    </ng-container>
-    <ng-template #download>
+    } @else {
       <ion-icon name="cloud-download-outline"></ion-icon>
-    </ng-template>
+    }
   </ion-fab-button>
 </ion-fab>
