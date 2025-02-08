@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
 import {
   InfiniteScrollCustomEvent,
   IonContent,
@@ -38,15 +38,15 @@ export class SearchPage implements OnInit, OnDestroy {
   // Properties
   public searchForm: FormGroup;
   private subs: SubscriptionsContainer = new SubscriptionsContainer();
-  public photoList: IPexelsPhoto[] = [];
+  public photoList = signal<IPexelsPhoto[]>([]);
   private page = 1;
   public featuredCollection: IFeaturedCollection;
   private searchParams: HttpParams = new HttpParams();
   public currentFilters: ISearchFilter[] = [];
 
   // State
-  public isLoading = false;
-  public isSearching = false;
+  public isLoading = signal<boolean>(false);
+  public isSearching = signal<boolean>(false);
 
   constructor(
     private pexelsService: PexelsService,
@@ -68,9 +68,9 @@ export class SearchPage implements OnInit, OnDestroy {
       .valueChanges.pipe(distinctUntilChanged())
       .subscribe((value: string): void => {
         if (!value) {
-          this.isSearching = false;
+          this.isSearching.set(false);
           this.page = 1;
-          this.photoList = [];
+          this.photoList.set([]);
           this.content.scrollToTop(500).then();
         }
       });
@@ -78,7 +78,7 @@ export class SearchPage implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     this.page = 1;
-    this.photoList = [];
+    this.photoList.set([]);
     this.content.scrollToTop(500).then();
     this.onSearch(this.searchForm.get('search')?.value || '');
   }
@@ -86,21 +86,24 @@ export class SearchPage implements OnInit, OnDestroy {
   private onSearch(query: string, initializeSearch?: boolean): void {
     if (query.length <= 0) {
       this.page = 1;
-      this.photoList = [];
+      this.photoList.set([]);
       this.infiniteScroll?.complete();
-      this.isLoading = false;
+      this.isLoading.set(false);
       return;
     }
 
-    this.isSearching = true;
+    this.isSearching.set(true);
 
     this.subs.add = this.pexelsService
       .searchQuery(query, this.page, this.searchParams)
       .subscribe({
         next: (value: IPexelsPhotoList): void => {
-          this.photoList = [...this.photoList, ...(value.photos || [])];
+          this.photoList.update((photoList) => [
+            ...photoList,
+            ...(value.photos || []),
+          ]);
           this.infiniteScroll?.complete();
-          this.isLoading = false;
+          this.isLoading.set(false);
 
           if (Capacitor?.getPlatform() !== 'web') {
             Keyboard.hide().then();
@@ -112,7 +115,7 @@ export class SearchPage implements OnInit, OnDestroy {
         },
         error: async (err: IPexelsError): Promise<void> => {
           this.infiniteScroll?.complete();
-          this.isLoading = false;
+          this.isLoading.set(false);
           await this.helperService.showError(err?.code);
         },
       });
@@ -120,7 +123,7 @@ export class SearchPage implements OnInit, OnDestroy {
 
   public onGalleryInfinite(event: InfiniteScrollCustomEvent): void {
     this.page = this.page + 1;
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.onSearch(this.searchForm.get('search')?.value || '');
   }
 
@@ -137,7 +140,7 @@ export class SearchPage implements OnInit, OnDestroy {
 
   public onSelectCard(event: IPexelsCollection): void {
     this.page = this.page + 1;
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.searchForm.get('search')?.setValue(event.title);
     this.searchInput.setFocus().then();
     this.onSearch(this.searchForm.get('search')?.value || '');
@@ -162,7 +165,7 @@ export class SearchPage implements OnInit, OnDestroy {
 
     this.searchParams = params;
     this.page = 1;
-    this.photoList = [];
+    this.photoList.set([]);
     this.onSearch(this.searchForm.get('search')?.value || '', true);
   }
 
@@ -171,7 +174,7 @@ export class SearchPage implements OnInit, OnDestroy {
     this.searchParams = new HttpParams();
     this.currentFilters = [];
     this.page = 1;
-    this.photoList = [];
+    this.photoList.set([]);
     this.onSearch(this.searchForm.get('search')?.value || '', true);
   }
 

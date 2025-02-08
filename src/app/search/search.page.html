@@ -24,7 +24,7 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    <ng-container *ngIf="featuredCollection && !isSearching">
+    <ng-container *ngIf="featuredCollection && !isSearching()">
       <ion-text>
         <h4 class="search_label">{{ "search.popular_search" | translate }}</h4>
       </ion-text>
@@ -34,14 +34,14 @@
       />
     </ng-container>
 
-    <app-gallery-view [photos]="photoList" />
+    <app-gallery-view [photos]="photoList()" />
 
     <ion-infinite-scroll
       #infiniteScroll
       (ionInfinite)="onGalleryInfinite($event)"
     >
       <div class="infinite-scroll-content">
-        <ng-container *ngIf="isLoading">
+        <ng-container *ngIf="isLoading()">
           <app-clock-loading />
         </ng-container>
       </div>
