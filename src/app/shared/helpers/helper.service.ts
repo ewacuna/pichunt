@@ -72,7 +72,7 @@ export class HelperService {
     this.httpClient.get(imageUrl, {headers, responseType: 'blob'}).subscribe({
       next: async (blob: Blob): Promise<void> => {
         // Download on Android
-        if (Capacitor?.getPlatform() === 'android') {
+        if (Capacitor?.getPlatform() === 'android' || Capacitor?.getPlatform() === 'ios') {
           // Check storage permissions
           let permission: PermissionStatus =
             await Filesystem.checkPermissions();
@@ -121,10 +121,19 @@ export class HelperService {
     reader.onloadend = async (): Promise<void> => {
       const base64data = reader.result;
       try {
+        const platform = Capacitor.getPlatform();
+        let directory = Directory.Documents;
+        let path = 'Pictures/';
+
+        if (platform === 'android') {
+          directory = Directory.ExternalStorage;
+          path = 'Download/';
+        }
+
         const result: WriteFileResult = await Filesystem.writeFile({
-          path: 'Download/' + fileName,
+          path: path + fileName,
           data: <string>base64data,
-          directory: Directory.ExternalStorage,
+          directory: directory,
           recursive: true,
         });
 
